@@ -52,7 +52,7 @@ docker compose config
 
 Docker client 29.7.2 is installed. The daemon was not running (`npipe:////./pipe/dockerDesktopLinuxEngine` was missing), so images were not built and containers were not started. `docker compose config` parsed. It publishes the UI at `127.0.0.1:5173` and the API at `127.0.0.1:8000`.
 
-`gh` is not installed in this shell. The GitHub Actions workflow was not inspected or triggered remotely. The workflow file runs pytest on Python 3.11 and, for the frontend, `npm ci`, typecheck, Vitest, and the production build on Node 20. Those checks were run locally only.
+The push of commit `873a743` triggered GitHub Actions run 1 on `master`. Both jobs completed successfully: pytest, and the frontend `npm ci`, typecheck, Vitest, and production build. The run is https://github.com/karthik2104-cr/Customer-Churn-Intelligence-Platform/actions/runs/38966344163.
 
 ## Browser verification
 
@@ -77,7 +77,7 @@ Screenshots from that session are in `docs/screenshots/`.
 ## Not done here
 
 - Docker images were not built and Compose was not started, because the Docker daemon was not running.
-- The GitHub Actions workflow was not executed here.
+- GitHub Actions run 1, for commit `873a743`, completed successfully. Docker images are still unverified.
 - There is no login. Do not expose the API publicly.
 - The calibrated random forest is explained with baseline occlusion. SHAP is implemented for estimators it supports, and it is discarded when the values do not match the probability.
 - Campaign outcomes remain unavailable. The file has no save-rate field.

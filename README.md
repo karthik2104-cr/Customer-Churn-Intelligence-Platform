@@ -283,7 +283,7 @@ Latest local run on 17 October 2026:
 
 The four pytest warnings are a Starlette note about `httpx` and a SHAP colormap deprecation. They do not fail the suite.
 
-GitHub Actions, in `.github/workflows/ci.yml`, runs pytest on Python 3.11 and the frontend typecheck, Vitest suite, and production build on Node 20. That remote workflow has not been observed. A local pass is not a GitHub Actions result.
+GitHub Actions, in `.github/workflows/ci.yml`, runs pytest on Python 3.11 and the frontend typecheck, Vitest suite, and production build on Node 20. The push of `873a743` started [run 1](https://github.com/karthik2104-cr/Customer-Churn-Intelligence-Platform/actions/runs/38966344163). Both the backend and frontend jobs completed with success.
 
 ## Dataset
 
