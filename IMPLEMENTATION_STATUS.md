@@ -72,12 +72,12 @@ Checked in the browser on 17 October 2026:
 - The prediction form with an empty tenure shows "Tenure must be zero or greater" and does not call the API. Batch scoring without a file shows "Choose a CSV file first." A successful live score was not submitted, because those endpoints persist rows into the demo database. Scoring itself is covered by the isolated API tests.
 - At 390px the menu button is visible (`display: block`), the sidebar transform is `matrix(1, 0, 0, 1, -288, 0)`, and the document width is 390. Opening the menu shows the close control and overlay. The theme toggle switches `html` to `dark` and back to light.
 
-Screenshots from that session are in `docs/screenshots/`.
+Screenshots in `docs/screenshots/` were recaptured from the running light-theme UI on 17 October 2026. The desktop captures use a 1440px viewport. `mobile-profile.png` is the 390px-wide profile for `5419-JPRRN`. No prediction or campaign write was submitted for those captures.
 
 ## Not done here
 
 - Docker images were not built and Compose was not started, because the Docker daemon was not running.
-- GitHub Actions run 1, for commit `873a743`, completed successfully. Docker images are still unverified.
+- GitHub Actions run 1 (`873a743`) and run 2 (`d8a968b`) completed successfully. Docker images are still unverified.
 - There is no login. Do not expose the API publicly.
 - The calibrated random forest is explained with baseline occlusion. SHAP is implemented for estimators it supports, and it is discarded when the values do not match the probability.
 - Campaign outcomes remain unavailable. The file has no save-rate field.

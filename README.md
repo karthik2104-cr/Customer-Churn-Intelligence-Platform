@@ -6,9 +6,10 @@ The running demo uses all 7,043 customer records. Observed churn is 1,869 / 7,04
 
 ## Contents
 
+- [Application preview](#application-preview)
+- [Feature gallery](#feature-gallery)
 - [Business problem](#business-problem)
 - [Features](#features)
-- [Screenshots](#screenshots)
 - [Architecture](#architecture)
 - [Technology stack](#technology-stack)
 - [Machine learning](#machine-learning)
@@ -23,6 +24,70 @@ The running demo uses all 7,043 customer records. Observed churn is 1,869 / 7,04
 - [Dataset](#dataset)
 - [Security](#security)
 - [Limitations and next steps](#limitations-and-next-steps)
+
+## Application preview
+
+These views were captured from the running app on 17 October 2026, in the light theme, at a 1440px desktop width. The API reported the model loaded and 7,043 customers.
+
+![Customer Churn Intelligence Platform — Overview](docs/screenshots/overview.png)
+
+Overview: 7,043 customers, 26.5% observed churn, 3,471 high-risk scores, and the contract chart. Observed churn and predicted risk are labeled separately.
+
+![Customer Churn Intelligence Platform — Customer profile](docs/screenshots/customer-profile.png)
+
+Customer profile for `5419-JPRRN`: month-to-month, $101.45, observed churn Yes, predicted probability 81.9% (high), baseline-occlusion factors, and the recommended next step. The contacted follow-up for this customer is on the retention page below.
+
+## Feature gallery
+
+### Analytics and customer profiles
+
+![Customer analytics with filters, population counts, and contract and tenure rates](docs/screenshots/analytics.png)
+
+Filters and rates for the labeled population. The denominator is the customers inside the current filter.
+
+![Customer directory sorted by priority, with risk, probability, and contract](docs/screenshots/customers.png)
+
+The directory lists the same 7,043 records. `5419-JPRRN` is the first row when sorted by priority.
+
+### Prediction and segmentation
+
+![Rule segments with membership counts and primary assignments](docs/screenshots/segments.png)
+
+Rule cards use one classifier for the count and the member list. Primary assignments are disjoint and sum to 7,043.
+
+![Individual prediction form before a score is submitted](docs/screenshots/predict.png)
+
+The form is ready to score one customer. This capture was taken before submit, so the demo database was not changed.
+
+### Retention operations
+
+![Retention queue with the contacted status for 5419-JPRRN](docs/screenshots/campaigns.png)
+
+The existing follow-up for `5419-JPRRN` is still Contacted. Status is a user record, not a measured save.
+
+### Model evaluation and explainability
+
+![Held-out confusion matrix and the training-split model comparison](docs/screenshots/model-performance.png)
+
+Decision threshold 0.16. Held-out counts are 670 true retained, 365 false churn, 52 missed churn, and 322 caught churn.
+
+![Global permutation importance on the validation split](docs/screenshots/explainability.png)
+
+Global importance is permutation importance on the internal validation split. It was not used to choose the model. Local factors on a profile use baseline occlusion.
+
+### Business impact and responsive design
+
+![Business impact assumptions and scenario estimates](docs/screenshots/business-impact.png)
+
+Inputs are editable assumptions. The dollar figures are scenarios, not observed savings.
+
+![Dataset summary and the eleven blank TotalCharges values](docs/screenshots/data-quality.png)
+
+The IBM file has 7,043 rows, 1,869 churned customers, and 11 blank `TotalCharges` values on tenure-0 accounts. Those totals are kept as 0.
+
+![Customer profile at a 390px-wide viewport](docs/screenshots/mobile-profile.png)
+
+At about 390px the sidebar becomes a menu button. The same `5419-JPRRN` profile shows the 81.9% score and the baseline-occlusion note.
 
 ## Business problem
 
@@ -41,24 +106,6 @@ The application keeps observed churn and predicted risk separate. A high score i
 - A retention queue with persisted statuses: follow-up required, contacted, offer proposed, and retained.
 - Conservative, base, and optimistic impact scenarios. Campaign success is labeled unavailable because the file has no outcome field.
 - Light and dark themes, and a collapsible navigation drawer on narrow screens.
-
-## Screenshots
-
-Captured from the local app on 17 October 2026. The overview is the light theme. The other pages below are the dark theme. Both themes read the same API.
-
-![Overview: 7,043 customers, 26.5 percent observed churn, and the high-risk count](docs/screenshots/overview.png)
-
-![Customer profile for 5419-JPRRN, including the score, occlusion factors, and the recorded follow-up](docs/screenshots/customer-profile.png)
-
-![Model performance for the selected random forest, including held-out metrics and the confusion matrix](docs/screenshots/model-performance.png)
-
-![Customer analytics with counts and rates for the filtered population](docs/screenshots/analytics.png)
-
-![Explainability: validation permutation importance and the local lookup](docs/screenshots/explainability.png)
-
-![Retention queue, including the contacted follow-up for 5419-JPRRN](docs/screenshots/campaigns.png)
-
-![Business impact scenarios labeled as estimates from editable assumptions](docs/screenshots/business-impact.png)
 
 ## Architecture
 
@@ -283,7 +330,7 @@ Latest local run on 17 October 2026:
 
 The four pytest warnings are a Starlette note about `httpx` and a SHAP colormap deprecation. They do not fail the suite.
 
-GitHub Actions, in `.github/workflows/ci.yml`, runs pytest on Python 3.11 and the frontend typecheck, Vitest suite, and production build on Node 20. The push of `873a743` started [run 1](https://github.com/karthik2104-cr/Customer-Churn-Intelligence-Platform/actions/runs/38966344163). Both the backend and frontend jobs completed with success.
+GitHub Actions, in `.github/workflows/ci.yml`, runs pytest on Python 3.11 and the frontend typecheck, Vitest suite, and production build on Node 20. [Run 1](https://github.com/karthik2104-cr/Customer-Churn-Intelligence-Platform/actions/runs/38966344163) for `873a743` and [run 2](https://github.com/karthik2104-cr/Customer-Churn-Intelligence-Platform/actions/runs/38966729190) for `d8a968b` both completed with success on the backend and frontend jobs.
 
 ## Dataset
 
@@ -312,5 +359,5 @@ These controls keep a local tool from mishandling a filename or a stack trace. T
 - The 0.16 threshold favors recall under an assumed 5:1 cost ratio.
 - Explanations for the calibrated forest are baseline occlusion, not SHAP.
 - Docker images have not been built in this environment because the daemon was not running.
-- Remote GitHub Actions has not been confirmed.
+- GitHub Actions runs 1 and 2 completed successfully. A later documentation push starts a new run; that run is confirmed only after GitHub reports it.
 - Useful later work is authentication before any non-local deploy, a later-period evaluation, and a place to record actual campaign outcomes.
